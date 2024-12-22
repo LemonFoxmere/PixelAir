@@ -1,0 +1,14 @@
+-rootPath
+/Users/lemonfoxmere/qt-projects/PixelAir
+-cmake-output
+-output-file
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/.qt/qml_imports/appPixelAir_conf.cmake
+-importPath
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/PixelAir
+-importPath
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug
+-importPath
+/Users/lemonfoxmere/Qt/6.8.0/macos/qml
+-qrcFiles
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/.qt/rcc/qmake_PixelAir.qrc
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/.qt/rcc/appPixelAir_raw_qml_0.qrc

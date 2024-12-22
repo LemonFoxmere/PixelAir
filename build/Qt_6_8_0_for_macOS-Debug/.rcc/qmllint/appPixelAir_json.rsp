@@ -1,0 +1,12 @@
+--bare
+-I
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug
+-I
+/Users/lemonfoxmere/Qt/6.8.0/macos/qml
+--resource
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/.qt/rcc/qmake_PixelAir.qrc
+--resource
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/.qt/rcc/appPixelAir_raw_qml_0.qrc
+/Users/lemonfoxmere/qt-projects/PixelAir/Main.qml
+--json
+/Users/lemonfoxmere/qt-projects/PixelAir/build/Qt_6_8_0_for_macOS-Debug/appPixelAir_qmllint.json
