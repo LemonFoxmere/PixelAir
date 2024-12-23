@@ -1,22 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(PixelAir VERSION 0.1 LANGUAGES CXX)
+project(PixelAir VERSION 0.1 LANGUAGES CXX OBJCXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_OBJCXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
 
-
 qt_add_executable(appPixelAir
-    main.cpp
+    src/main.cpp
+    macos/windowHelper/MacOSWindowHelper.h
+    macos/windowHelper/MacOSWindowHelper.mm
 )
 
 qt_add_qml_module(appPixelAir
     URI PixelAir
     VERSION 1.0
     QML_FILES
-        Main.qml
+        qml/Main.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -40,3 +42,9 @@ install(TARGETS appPixelAir
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# macos native support with cocoa
+find_library(COCOA_LIBRARY Cocoa)
+if(COCOA_LIBRARY)
+    target_link_libraries(appPixelAir PRIVATE ${COCOA_LIBRARY}) # link if exists
+endif()
