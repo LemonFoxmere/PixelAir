@@ -13,6 +13,9 @@ class CanvasController : public QObject
 
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
+    Q_PROPERTY(float x READ x WRITE setX NOTIFY xChanged)
+    Q_PROPERTY(float y READ y WRITE setY NOTIFY yChanged)
+    Q_PROPERTY(float zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
     Q_PROPERTY(int activeLayer READ activeLayer WRITE setActiveLayer NOTIFY activeLayerChanged)
 
 public:
@@ -25,7 +28,8 @@ public:
     Q_INVOKABLE void erasePixel(int x, int y);
     Q_INVOKABLE void clearLayer();
 
-    Q_INVOKABLE std::optional<Pixel> getPixel(int x, int y) const;
+    std::optional<Pixel> getPixel(int x, int y) const;
+    QVector<Pixel> getLayerPixels(int layer) const;
 
     int width() const;
     void setWidth(int width);
@@ -36,10 +40,21 @@ public:
     int activeLayer() const;
     void setActiveLayer(int newActiveLayer);
 
+    float y() const;
+    void setY(float newY);
+    float x() const;
+    void setX(float newX);
+    float zoom() const;
+    void setZoom(float newZoom);
+
 signals:
     void widthChanged();
     void heightChanged();
     void activeLayerChanged();
+
+    void xChanged();
+    void yChanged();
+    void zoomChanged();
 
 private:
     int m_width;
@@ -50,6 +65,11 @@ private:
     // helper functions
     int clampToRange(int value, int min, int max) const;
     int clampToNonNegative(int value) const;
+    float m_x;
+    float m_y;
+    float m_zoom;
+
+    float m_defaultPixelSize;
 };
 
 #endif // CANVASCONTROLLER_H

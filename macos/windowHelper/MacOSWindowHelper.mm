@@ -1,17 +1,33 @@
 #import <Cocoa/Cocoa.h>
 #import <QtGui/qwindowdefs.h>
 
+// Toolbar delegate to hide the toolbar in fullscreen
+@interface WindowDelegate : NSObject <NSWindowDelegate>
+@end
+
+@implementation WindowDelegate
+- (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions {
+    return NSApplicationPresentationAutoHideToolbar | NSApplicationPresentationAutoHideMenuBar | NSApplicationPresentationFullScreen;
+}
+- (void)windowWillClose:(NSNotification *)notification {
+    [NSApp terminate:nil];
+}
+@end
+
 void customizeMacOSWindow(WId nativeWinId) {
   // WId -> NSView
   NSView *nativeView = (__bridge NSView *)(reinterpret_cast<void *> (nativeWinId));
   if(!nativeView) return;
 
-  NSWindow *nsw = [nativeView window];
+  NSWindow *nsw = (NSWindow *)[nativeView window];
   if (!nsw) {
-      return; // fail if the window is invalid
+      return; // Fail if the window is invalid
   }
 
   NSUInteger styleMask = [nsw styleMask];
+  styleMask |= NSWindowStyleMaskTitled;
+  styleMask |= NSWindowStyleMaskClosable;
+  styleMask |= NSWindowStyleMaskResizable;
   styleMask |= NSWindowStyleMaskFullSizeContentView;
   [nsw setStyleMask:styleMask];
 
@@ -21,7 +37,11 @@ void customizeMacOSWindow(WId nativeWinId) {
   toolbar.allowsDisplayModeCustomization = NO;
 
   nsw.toolbar = toolbar;
+  nsw.toolbarStyle = NSWindowToolbarStyleUnified;
+  nsw.titleVisibility = NSWindowTitleHidden;
 
-  nsw.movableByWindowBackground = YES;
   nsw.titlebarAppearsTransparent = YES;
+
+  WindowDelegate  *windowDelegate = [[WindowDelegate  alloc] init];
+  nsw.delegate = windowDelegate;
 }
