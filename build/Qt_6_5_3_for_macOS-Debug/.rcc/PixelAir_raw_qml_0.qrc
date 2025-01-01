@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/PixelAir/">
+    <file alias="Main.qml">/Users/lemonfoxmere/QtProjects/PixelAir/Main.qml</file>
+    <file alias="resources.qrc">/Users/lemonfoxmere/QtProjects/PixelAir/resources.qrc</file>
+    <file alias="src/views/shaders/gradientshader.frag">/Users/lemonfoxmere/QtProjects/PixelAir/src/views/shaders/gradientshader.frag</file>
+    <file alias="src/views/shaders/gradientshader.vert">/Users/lemonfoxmere/QtProjects/PixelAir/src/views/shaders/gradientshader.vert</file>
+  </qresource>
+</RCC>
+

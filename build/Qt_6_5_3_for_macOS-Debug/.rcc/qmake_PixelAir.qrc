@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/PixelAir">
+    <file alias="qmldir">/Users/lemonfoxmere/QtProjects/PixelAir/build/Qt_6_5_3_for_macOS-Debug/PixelAir/qmldir</file>
+  </qresource>
+</RCC>
+

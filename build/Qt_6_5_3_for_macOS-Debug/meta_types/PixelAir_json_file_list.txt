@@ -1,0 +1,2 @@
+/Users/lemonfoxmere/QtProjects/PixelAir/build/Qt_6_5_3_for_macOS-Debug/PixelAir_autogen/include/../METKDVI4SS/moc_canvascontroller.cpp.json
+/Users/lemonfoxmere/QtProjects/PixelAir/build/Qt_6_5_3_for_macOS-Debug/PixelAir_autogen/include/../Z3L7HTGYLD/moc_canvasrenderer.cpp.json

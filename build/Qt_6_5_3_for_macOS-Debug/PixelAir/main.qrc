@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images/raster">
+        <file>resources/appicon.png</file>
+    </qresource>
+</RCC>
