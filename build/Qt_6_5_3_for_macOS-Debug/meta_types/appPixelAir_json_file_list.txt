@@ -1,1 +1,0 @@
-/Users/lemonfoxmere/QtProjects/PixelAir/build/Qt_6_5_3_for_macOS-Debug/appPixelAir_autogen/include/../METKDVI4SS/moc_canvascontroller.cpp.json

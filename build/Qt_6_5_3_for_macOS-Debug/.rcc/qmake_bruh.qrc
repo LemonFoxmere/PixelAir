@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/bruh">
-    <file alias="qmldir">/Users/lemonfoxmere/QtProjects/PixelAir/build/Qt_6_5_3_for_macOS-Debug/bruh/qmldir</file>
-  </qresource>
-</RCC>
-

@@ -1,5 +1,0 @@
-module PixelAir
-typeinfo PixelAir.qmltypes
-prefer :/PixelAir/
-Main 1.0 Main.qml
-

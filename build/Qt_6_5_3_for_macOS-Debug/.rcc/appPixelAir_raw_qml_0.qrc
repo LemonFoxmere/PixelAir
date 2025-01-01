@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/PixelAir/">
-    <file alias="Main.qml">/Users/lemonfoxmere/QtProjects/PixelAir/Main.qml</file>
-  </qresource>
-</RCC>
-
