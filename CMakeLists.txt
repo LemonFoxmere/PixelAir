@@ -6,7 +6,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OBJCXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+enable_testing()
+
+find_package(Qt6 REQUIRED COMPONENTS Quick Test)
+find_package(GTest REQUIRED)
 
 qt_add_executable(PixelAir
     main.cpp
@@ -23,16 +26,27 @@ qt_add_qml_module(PixelAir
         src/models/rasterlayer.h src/models/rasterlayer.cpp
         src/controllers/canvascontroller.h src/controllers/canvascontroller.cpp
         src/views/canvasrenderer.h src/views/canvasrenderer.cpp
-        src/views/shaders/gradientshader.h src/views/shaders/gradientshader.cpp
+        src/views/shaders/gradient/gradientshader.h src/views/shaders/gradient/gradientshader.cpp
         main.cpp
     RESOURCES
         resources.qrc
-        src/views/shaders/gradientshader.frag
-        src/views/shaders/gradientshader.vert
+        src/views/shaders/gradient/gradientshader.frag
+        src/views/shaders/gradient/gradientshader.vert
 )
 
 qt_add_resources(app_resources resources.qrc)
 target_sources(PixelAir PRIVATE ${app_resources})
+
+# test executables
+qt_add_executable(TestAVLTree
+    tests/tst_avltree.cpp
+    src/models/avltree.h src/models/avltree.cpp
+)
+qt_add_executable(TestRasterLayer
+    tests/tst_rasterlayer.cpp
+    src/models/avltree.h src/models/avltree.cpp
+    src/models/rasterlayer.h src/models/rasterlayer.cpp
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -51,12 +65,15 @@ target_include_directories(PixelAir
         ${CMAKE_CURRENT_SOURCE_DIR}/src/controllers
         ${CMAKE_CURRENT_SOURCE_DIR}/src/models
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/shaders
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/shaders/
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/shaders/gradient
 )
+target_include_directories(TestAVLTree PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/models)
+target_include_directories(TestRasterLayer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/models)
 
-target_link_libraries(PixelAir
-    PRIVATE Qt6::Quick
-)
+target_link_libraries(PixelAir PRIVATE Qt6::Quick)
+target_link_libraries(TestAVLTree PRIVATE Qt6::Quick GTest::GTest GTest::Main Qt6::Test)
+target_link_libraries(TestRasterLayer PRIVATE Qt6::Quick GTest::GTest GTest::Main Qt6::Test)
 
 include(GNUInstallDirs)
 install(TARGETS PixelAir
@@ -64,6 +81,9 @@ install(TARGETS PixelAir
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# adding tests
+add_test(NAME AVLTreeTests COMMAND TestAVLTree)
 
 # macos native support with cocoa
 find_library(COCOA_LIBRARY Cocoa)

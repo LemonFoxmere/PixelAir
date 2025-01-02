@@ -11,8 +11,8 @@ RasterLayer::RasterLayer() {
     visible_ = true;
 }
 
-RasterLayer::RasterLayer(const RasterLayer& other) {
-    pixelData_ = AVLTree<int, Column>(other.pixelData_);
+RasterLayer::RasterLayer(const RasterLayer& other)
+    : pixelData_(other.pixelData_){
     size_ = other.size_;
     name_ = other.name_;
     visible_ = other.visible_;
@@ -31,7 +31,7 @@ bool RasterLayer::contains(const QPoint loc) const {
     return column.value().get().contains(loc.y());
 }
 
-std::optional<Pixel> RasterLayer::get(const QPoint loc) const {
+std::optional<PixelRef> RasterLayer::get(const QPoint loc) const {
     auto column = pixelData_.get(loc.x());
     if (!column.has_value())
         return std::nullopt;
@@ -40,12 +40,12 @@ std::optional<Pixel> RasterLayer::get(const QPoint loc) const {
     if (!c.has_value())
         return std::nullopt;
 
-    return Pixel(loc, c.value());
+    return PixelRef(loc, std::ref(c.value()));
 }
 
-QVector<Pixel> RasterLayer::get(const int x1, const int x2, const int y1, const int y2) const {
+QVector<PixelRef> RasterLayer::get(const int x1, const int x2, const int y1, const int y2) const {
     if (x1 > x2 || y1 > y2) return {}; // invalid bounding box
-    QVector<Pixel> pixels;
+    QVector<PixelRef> pixels;
 
     auto columns = pixelData_.getRange(x1, x2);
     for (int i = 0; i < columns.length(); i++) {
@@ -54,16 +54,21 @@ QVector<Pixel> RasterLayer::get(const int x1, const int x2, const int y1, const 
         for (int j = 0; j < yPixels.length(); j++) {
             int y = yPixels[j].first;
             QColor c = yPixels[j].second;
-            pixels.emplaceBack(QPoint(x, y), c);
+            pixels.emplaceBack(QPoint(x, y), std::ref(c));
         }
     }
 
     return pixels;
 }
 
-QVector<Pixel> RasterLayer::get(const QRect boundingBox) const {
+QVector<PixelRef> RasterLayer::get(const QRect boundingBox) const {
     if (boundingBox.isEmpty()) return {}; // sanity check
-    return get(boundingBox.left(), boundingBox.top(), boundingBox.right(), boundingBox.bottom());
+
+    return get(
+        boundingBox.left(),
+        boundingBox.right(),
+        boundingBox.top(),
+        boundingBox.bottom());
 }
 
 void RasterLayer::clear() {
@@ -79,8 +84,6 @@ void RasterLayer::update(const QPoint loc, const QColor c) {
 }
 
 void RasterLayer::upsert(const QPoint loc, const QColor c) {
-    qDebug() << "Upserting: " << loc;
-
     auto column = pixelData_.get(loc.x());
     if (!column.has_value()) { // if the col doesnt exist yet, make a new one
         Column newColumn = AVLTree<int, QColor>();

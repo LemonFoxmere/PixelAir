@@ -4,7 +4,7 @@ layout(location = 0) out vec4 fragColor;
 
 vec2 v0 = vec2(0.0, 0.0);
 vec2 v1 = vec2(1.0, 0.0);
-vec2 v2 = vec2(0.5, 1.0);
+vec2 v2 = vec2(0.0, 1.0);
 
 void main(void)
 {

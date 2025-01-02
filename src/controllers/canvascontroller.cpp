@@ -18,8 +18,6 @@ CanvasController::CanvasController(QObject *parent)
     layer.upsert({2, 1}, QColor(0, 255, 255, 255));
     layer.upsert({4, 0}, QColor(255, 0, 255, 255));
     layer.upsert({1, 2}, QColor(255, 0, 0, 255));
-
-    qDebug().noquote() << layer.toString();
 }
 
 void CanvasController::drawPixel(int x, int y, QColor c) {
@@ -40,13 +38,13 @@ void CanvasController::clearLayer() {
     layer.clear();
 }
 
-std::optional<Pixel> CanvasController::getPixel(int x, int y) const {
+std::optional<PixelRef> CanvasController::getPixel(int x, int y) const {
     // get the active layer
     RasterLayer layer = m_layers[m_activeLayer];
     return layer.get({x, y});
 }
 
-QVector<Pixel> CanvasController::getLayerPixels(int layer) const {
+QVector<PixelRef> CanvasController::getLayerPixels(int layer) const {
     // get the active layer
     RasterLayer l = m_layers[layer];
 }

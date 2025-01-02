@@ -22,7 +22,7 @@ ApplicationWindow {
             left: root.left
             right: root.right
         }
-        z: 1
+        z: 2
 
         MouseArea {
             anchors.fill: topBar
@@ -52,6 +52,7 @@ ApplicationWindow {
             text: `Canvas size: ${CanvasController.width} x ${CanvasController.height} \n` +
                   `Scale: ${CanvasController.zoom} \n` +
                   `Active layer: ${CanvasController.activeLayer}`
+            z: 1
         }
 
         CanvasRenderer {

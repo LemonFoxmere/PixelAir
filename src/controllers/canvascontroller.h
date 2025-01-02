@@ -28,8 +28,8 @@ public:
     Q_INVOKABLE void erasePixel(int x, int y);
     Q_INVOKABLE void clearLayer();
 
-    std::optional<Pixel> getPixel(int x, int y) const;
-    QVector<Pixel> getLayerPixels(int layer) const;
+    std::optional<PixelRef> getPixel(int x, int y) const;
+    QVector<PixelRef> getLayerPixels(int layer) const;
 
     int width() const;
     void setWidth(int width);

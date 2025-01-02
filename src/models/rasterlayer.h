@@ -6,14 +6,15 @@
 #include <QVector2D>
 
 // A single pixel (without any of the node shit)
-struct Pixel {
+struct PixelRef {
     QPoint location;
-    QColor value;
+    std::reference_wrapper<QColor> value;
 
-    Pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-        : location{x, y}, value{QColor(r, g, r, a)} {};
-    Pixel(QPoint l, QColor v)
-        : location(l), value(v) {};
+    PixelRef(int x, int y, QColor& color)
+        : location{x, y}, value{color} {}
+
+    PixelRef(QPoint l, QColor& color)
+        : location{l}, value{color} {}
 };
 
 class RasterLayer
@@ -43,10 +44,10 @@ public:
     bool contains(const QPoint loc) const;
 
     // return the pixel at location. If there is no pixel at location k, return nil
-    std::optional<Pixel> get(const QPoint loc) const;
+    std::optional<PixelRef> get(const QPoint loc) const;
     // return all pixels within a given region. If there are no pixels in the region, return an empty vector
-    QVector<Pixel> get(const int x1, const int x2, const int y1, const int y2) const;
-    QVector<Pixel> get(const QRect boundingBox) const;
+    QVector<PixelRef> get(const int x1, const int x2, const int y1, const int y2) const;
+    QVector<PixelRef> get(const QRect boundingBox) const;
 
     // mutators ---------------------------
 

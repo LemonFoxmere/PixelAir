@@ -1,9 +1,8 @@
 #include "canvasrenderer.h"
 
-#include <gradientshader.h>
 #include <QSGFlatColorMaterial>
 #include <QSGGeometry>
-#include <QSGGeometryNode>
+#include <QSGSimpleRectNode>
 
 CanvasRenderer::CanvasRenderer() {
     setFlag(ItemHasContents, true);
@@ -11,27 +10,19 @@ CanvasRenderer::CanvasRenderer() {
 
 // render
 QSGNode *CanvasRenderer::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data) {
-    QSGGeometryNode* node = static_cast<QSGGeometryNode*>(oldNode);
+    QSGSimpleRectNode* node = static_cast<QSGSimpleRectNode*>(oldNode);
     if(!oldNode) {
-        QSGGeometry *geometry = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), 3);
-        geometry->setDrawingMode(QSGGeometry::DrawTriangles);
-        GradientMaterial *material = new GradientMaterial();
+        // QSGGeometry *geometry = new QSGGeometry(QSGGeometry::defaultAttributes_TexturedPoint2D(), 6);
+        // geometry->setDrawingMode(QSGGeometry::DrawTriangles);
+        // GradientMaterial *material = new GradientMaterial();
 
-        node = new QSGGeometryNode;
-
-        node->setGeometry(geometry);
-        node->setFlag(QSGNode::OwnsGeometry);
-        node->setMaterial(material);
-        node->setFlag(QSGNode::OwnsMaterial);
+        // node = new QSGGeometryNode;
+        node = new QSGSimpleRectNode();
+        node->setColor("white");
     }
 
-    QSGGeometry* geometry = node->geometry();
-    QSGGeometry::TexturedPoint2D *vertices = geometry->vertexDataAsTexturedPoint2D();
-    vertices[0].set(width() / 2.0, 0, 0.5, 1); // top center
-    vertices[1].set(0, height(), 0, 0); // bottom left
-    vertices[2].set(width(), height(), 1, 0); // bottom right
-
-
+    int size = 100;
+    node->setRect(QRectF(width()/2-size/2, height()/2-size/2, size, size));
     node->markDirty(QSGNode::DirtyGeometry | QSGNode::DirtyMaterial);
 
     return node;

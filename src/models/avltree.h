@@ -19,11 +19,9 @@ private:
         int height;
 
         Node(K k, V v)
-            : key(k), val(std::move(v)), parent(nullptr), left(nullptr), right(nullptr), height(0) {};
+            : key(k), val(v), parent(nullptr), left(nullptr), right(nullptr), height(0) {};
     };
 
-    static Node* nil;
-    static int nilInstances_;
     Node* root;
     int size_;
 

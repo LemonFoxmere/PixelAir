@@ -4,9 +4,7 @@
         <file>resources/appicon_leroy.png</file>
     </qresource>
     <qresource prefix="/shaders">
-        <file>src/views/shaders/gradientshader.frag</file>
-        <file>src/views/shaders/gradientshader.vert</file>
-        <file>src/views/shaders/gradientshader.frag.qsb</file>
-        <file>src/views/shaders/gradientshader.vert.qsb</file>
+        <file>src/views/shaders/gradient/gradientshader.frag.qsb</file>
+        <file>src/views/shaders/gradient/gradientshader.vert.qsb</file>
     </qresource>
 </RCC>
